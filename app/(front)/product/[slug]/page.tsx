@@ -1,3 +1,4 @@
+import AddToCart from '@/components/products/AddToCart'
 import ProductItem from '@/components/products/ProductItem'
 import data from '@/lib/data'
 import { HOME } from '@/routes/routes'
@@ -5,13 +6,14 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
-export default function ProductDetails({
+export default async function ProductDetails({
   params,
 }: {
   params: { slug: string }
 }) {
-  const product = data.products.find((x) => x.slug === params?.slug)
-  const suggestionProduct = data.products.filter((x) => x.slug !== params?.slug)
+  const { slug } = await params
+  const product = data.products.find((x) => x.slug === slug)
+  const suggestionProduct = data.products.filter((x) => x.slug !== slug)
   if (!product) {
     return <div>Product not Found</div>
   }
@@ -27,6 +29,7 @@ export default function ProductDetails({
             alt={product.name}
             width={640}
             height={640}
+            priority
             sizes="100vw"
             style={{
               width: '100%',
@@ -60,14 +63,23 @@ export default function ProductDetails({
                   {product.countInStock > 0 ? 'In stock ' : 'Unavailable'}
                 </div>
               </div>
-              <div className="card-actions justify-center">
+              {
+                product.countInStock !== 0 && (
+                  <div className='card-actions justify-center' >
+                    <AddToCart
+                    item={{...product,qty:0,color:'',size:''}}
+                    />
+                    </div>
+                )
+              }
+              {/* <div className="card-actions justify-center">
                 <button
                   className="btn btn-primary w-full text-white   "
                   type="button"
                 >
                   Add to cart
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -77,7 +89,7 @@ export default function ProductDetails({
           Similar Products
         </h2>
         <div className="grid grid-cols-1 gap-4 mg:grid-cols-3 lg:grid-cols-4">
-          {suggestionProduct.map((product) => (
+          {suggestionProduct.splice(0, 4).map((product) => (
             <ProductItem key={product.slug} product={product} />
           ))}
         </div>

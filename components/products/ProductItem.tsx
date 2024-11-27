@@ -12,6 +12,7 @@ export default function ProductItem({ product }: { product: Product }) {
             src={product.image}
             alt={product.name}
             width={300}
+            priority
             height={300}
             className='object-cover h-64 w-full'
           />

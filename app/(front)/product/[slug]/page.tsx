@@ -10,8 +10,8 @@ export default function ProductDetails({
 }: {
   params: { slug: string }
 }) {
-  const product = data.products.find((x) => x.slug === params.slug)
-  const suggestionProduct = data.products.filter((x) => x.slug !== params.slug)
+  const product = data.products.find((x) => x.slug === params?.slug)
+  const suggestionProduct = data.products.filter((x) => x.slug !== params?.slug)
   if (!product) {
     return <div>Product not Found</div>
   }
@@ -60,18 +60,22 @@ export default function ProductDetails({
                   {product.countInStock > 0 ? 'In stock ' : 'Unavailable'}
                 </div>
               </div>
-              <div className='card-actions justify-center' >
-                <button className='btn btn-primary w-full text-white   ' type='button' >
-                    Add to cart
+              <div className="card-actions justify-center">
+                <button
+                  className="btn btn-primary w-full text-white   "
+                  type="button"
+                >
+                  Add to cart
                 </button>
-
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className='my-2' >
-        <h2 className='text-3xl font-normal tracking-wide p-2  ' >Similar Products</h2>
+      <div className="my-2">
+        <h2 className="text-3xl font-normal tracking-wide p-2  ">
+          Similar Products
+        </h2>
         <div className="grid grid-cols-1 gap-4 mg:grid-cols-3 lg:grid-cols-4">
           {suggestionProduct.map((product) => (
             <ProductItem key={product.slug} product={product} />

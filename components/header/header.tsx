@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
-import { HOME, CART, SIGNIN } from '@/routes/routes'
+import { HOME } from '@/routes/routes'
 import Menu from './Menu'
 function Header() {
   return (

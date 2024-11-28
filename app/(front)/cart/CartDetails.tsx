@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react'
 
 export default function CartDetails() {
 //   const router = useRouter()
-  const { items, itemsPrice, decrease, increase } = useCartService()
+  const { items, decrease, increase } = useCartService()
 
   const [mounted, setMounted] = useState(false)
   useEffect(() => {

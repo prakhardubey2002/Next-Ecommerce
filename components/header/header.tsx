@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
-import {HOME,CART,SIGNIN} from "@/routes/routes"
+import { HOME, CART, SIGNIN } from '@/routes/routes'
+import Menu from './Menu'
 function Header() {
   return (
     <div>
@@ -8,18 +9,7 @@ function Header() {
         <Link href={HOME} className="btn btn-ghost text-lg">
           Next Amazona V2
         </Link>
-        <ul className="flex">
-          <li>
-            <Link href={CART} className="btn btn-ghost rounded-btn ">
-              Cart
-            </Link>
-          </li>
-          <li>
-            <Link href={SIGNIN} className="btn btn-ghost rounded-btn ">
-              Sign in
-            </Link>
-          </li>
-        </ul>
+        <Menu />
       </nav>
     </div>
   )

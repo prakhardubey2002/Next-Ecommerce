@@ -63,15 +63,13 @@ export default async function ProductDetails({
                   {product.countInStock > 0 ? 'In stock ' : 'Unavailable'}
                 </div>
               </div>
-              {
-                product.countInStock !== 0 && (
-                  <div className='card-actions justify-center' >
-                    <AddToCart
-                    item={{...product,qty:0,color:'',size:''}}
-                    />
-                    </div>
-                )
-              }
+              {product.countInStock !== 0 && (
+                <div className="card-actions justify-center">
+                  <AddToCart
+                    item={{ ...product, qty: 0, color: '', size: '' }}
+                  />
+                </div>
+              )}
               {/* <div className="card-actions justify-center">
                 <button
                   className="btn btn-primary w-full text-white   "

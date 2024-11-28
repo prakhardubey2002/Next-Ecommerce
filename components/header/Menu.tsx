@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import useCartService from '@/lib/hooks/useCartStore'
 import Link from 'next/link'
+import { CART, SIGNIN } from '@/routes/routes'
 
 export default function Menu() {
   const { items } = useCartService()
@@ -13,7 +14,7 @@ export default function Menu() {
     <div>
       <ul className="flex items-stretch">
         <li>
-          <Link className="btn btn-ghost rounded-btn" href="/cart">
+          <Link className="btn btn-ghost rounded-btn" href={CART}>
             Cart
             {mounted && items.length != 0 && (
               <div className="badge badge-secondary">
@@ -24,7 +25,7 @@ export default function Menu() {
           </Link>
         </li>
         <li>
-          <button className="btn btn-ghost rounded-btn">Sign in</button>
+          <Link href={SIGNIN} className="btn btn-ghost rounded-btn">Sign in</Link>
         </li>
       </ul>
     </div>

@@ -18,7 +18,12 @@ const initialState: Cart = {
   shippingPrice: 0,
   totalPrice: 0,
 }
-export const cartStore = create<Cart>(() => initialState)
+// export const cartStore = create<Cart>(() => initialState)
+export const cartStore = create<Cart>()(
+  persist(() => initialState, {
+    name: 'cartStore',
+  })
+)
 export default function useCartService() {
   const { items, itemsPrice, taxPrice, shippingPrice, totalPrice } = cartStore()
   return {
@@ -44,7 +49,7 @@ export default function useCartService() {
         totalPrice,
       })
     },
-    decrese: (item: OrderItem) => {
+    decrease: (item: OrderItem) => {
       const exist = items.find((x) => x.slug === item.slug)
       if (!exist) return
       const updatedCartItems =
@@ -53,13 +58,13 @@ export default function useCartService() {
           : items.map((x) => (item.slug ? { ...exist, qty: exist.qty - 1 } : x))
       const { itemsPrice, taxPrice, shippingPrice, totalPrice } =
         calcPrice(updatedCartItems)
-        cartStore.setState({
-          items: updatedCartItems,
-          itemsPrice,
-          taxPrice,
-          shippingPrice,
-          totalPrice,
-        })
+      cartStore.setState({
+        items: updatedCartItems,
+        itemsPrice,
+        taxPrice,
+        shippingPrice,
+        totalPrice,
+      })
     },
   }
 }

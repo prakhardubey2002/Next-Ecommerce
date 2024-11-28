@@ -6,14 +6,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-export default function ProductDetails({
+export default async function ProductDetails({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const { slug } = params; // No need to use `await` here.
+  const { slug } = await params;
   const product = data.products.find((x) => x.slug === slug);
-  const suggestionProducts = data.products.filter((x) => x.slug !== slug); // Immutable filtering.
+  const suggestionProducts = data.products.filter((x) => x.slug !== slug);
 
   if (!product) {
     return <div>Product not Found</div>;
@@ -89,3 +89,4 @@ export default function ProductDetails({
     </>
   );
 }
+

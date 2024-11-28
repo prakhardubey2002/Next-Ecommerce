@@ -1,22 +1,24 @@
-import AddToCart from '@/components/products/AddToCart'
-import ProductItem from '@/components/products/ProductItem'
-import data from '@/lib/data'
-import { HOME } from '@/routes/routes'
-import Image from 'next/image'
-import Link from 'next/link'
-import React from 'react'
+import AddToCart from '@/components/products/AddToCart';
+import ProductItem from '@/components/products/ProductItem';
+import data from '@/lib/data';
+import { HOME } from '@/routes/routes';
+import Image from 'next/image';
+import Link from 'next/link';
+import React from 'react';
 
-export default async function ProductDetails({
+export default function ProductDetails({
   params,
 }: {
-  params: { slug: string }
+  params: { slug: string };
 }) {
-  const { slug } = await params
-  const product = data.products.find((x) => x.slug === slug)
-  const suggestionProduct = data.products.filter((x) => x.slug !== slug)
+  const { slug } = params; // No need to use `await` here.
+  const product = data.products.find((x) => x.slug === slug);
+  const suggestionProducts = data.products.filter((x) => x.slug !== slug); // Immutable filtering.
+
   if (!product) {
-    return <div>Product not Found</div>
+    return <div>Product not Found</div>;
   }
+
   return (
     <>
       <div className="my-2">
@@ -46,12 +48,12 @@ export default async function ProductDetails({
               {product.rating} of {product.numReviews}
             </li>
             <li>
-              Descrption : <p>{product.description}</p>
+              Description: <p>{product.description}</p>
             </li>
           </ul>
         </div>
         <div>
-          <div className="card bg-base-300 shadow-xl mt-3 md:mt-0 ">
+          <div className="card bg-base-300 shadow-xl mt-3 md:mt-0">
             <div className="card-body">
               <div className="mb-2 flex justify-between">
                 <div>Price</div>
@@ -60,38 +62,30 @@ export default async function ProductDetails({
               <div className="mb-2 flex justify-between">
                 <div>Status</div>
                 <div>
-                  {product.countInStock > 0 ? 'In stock ' : 'Unavailable'}
+                  {product.countInStock > 0 ? 'In stock' : 'Unavailable'}
                 </div>
               </div>
-              {product.countInStock !== 0 && (
+              {product.countInStock > 0 && (
                 <div className="card-actions justify-center">
                   <AddToCart
                     item={{ ...product, qty: 0, color: '', size: '' }}
                   />
                 </div>
               )}
-              {/* <div className="card-actions justify-center">
-                <button
-                  className="btn btn-primary w-full text-white   "
-                  type="button"
-                >
-                  Add to cart
-                </button>
-              </div> */}
             </div>
           </div>
         </div>
       </div>
       <div className="my-2">
-        <h2 className="text-3xl font-normal tracking-wide p-2  ">
+        <h2 className="text-3xl font-normal tracking-wide p-2">
           Similar Products
         </h2>
-        <div className="grid grid-cols-1 gap-4 mg:grid-cols-3 lg:grid-cols-4">
-          {suggestionProduct.splice(0, 4).map((product) => (
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
+          {suggestionProducts.slice(0, 4).map((product) => (
             <ProductItem key={product.slug} product={product} />
           ))}
         </div>
       </div>
     </>
-  )
+  );
 }

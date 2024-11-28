@@ -1,6 +1,14 @@
 import ProductItem from '@/components/products/ProductItem'
 import data from '@/lib/data'
+import { Metadata } from 'next'
 import React from 'react'
+
+export const metadata: Metadata = {
+  title: process.env.NEXT_PUBLIC_APP_NAME || 'Next Amazon',
+  description:
+    process.env.NEXT_PUBLIC_APP_DESC ||
+    ' Nextjs,Server components,Next auth,daisyui,zustand ',
+}
 
 const Home = () => {
   return (

@@ -4,12 +4,12 @@ import useCartService from '@/lib/hooks/useCartStore'
 import { HOME } from '@/routes/routes'
 import Image from 'next/image'
 import Link from 'next/link'
-// import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 export default function CartDetails() {
-//   const router = useRouter()
-  const { items, decrease, increase } = useCartService()
+  const router = useRouter()
+  const { items, itemsPrice, decrease, increase } = useCartService()
 
   const [mounted, setMounted] = useState(false)
   useEffect(() => {
@@ -52,26 +52,55 @@ export default function CartDetails() {
                       </Link>
                     </td>
                     <td>
-                        <button 
-                        className='btn'
-                        type='button'
-                        onClick={()=>decrease(item)}
-                        >
-                            -
-                        </button>
-                        <span className='px-2'>{item.qty}</span>
-                        <button
-                        className='btn'
-                        type='button'
-                        onClick={()=>increase(item)}
-                        >
-                            +
-                        </button>
+                      <button
+                        className="btn"
+                        type="button"
+                        onClick={() => decrease(item)}
+                      >
+                        -
+                      </button>
+                      <span className="px-2">{item.qty}</span>
+                      <button
+                        className="btn"
+                        type="button"
+                        onClick={() => increase(item)}
+                      >
+                        +
+                      </button>
                     </td>
+                    <td> ${item.price * item.qty}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
+          </div>
+          <div>
+            <div className="card bg-base-300 ">
+              <div className="card-body">
+                <ul>
+                  <li>
+                    <div className="pb-3 text-xl">
+                      <ul>
+                        <li>
+                          <div className="pb-3 text-xl">
+                            Subtotal({items.reduce((a, c) => a + c.qty, 0)}) : ${' '}
+                            {itemsPrice}
+                          </div>
+                        </li>
+                        <li>
+                          <button
+                            onClick={() => router.push('/shipping')}
+                            className='btn btn-primary w-full'
+                          >
+                            Proceed to Checkout
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       )}

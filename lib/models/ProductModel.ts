@@ -19,7 +19,7 @@ const productSchema = new mongoose.Schema(
   }
 )
 const ProductModel=mongoose.models.Product || mongoose.model('Product',productSchema)
-
+export default ProductModel
 export type Product = {
   _id?: string
   name: string

@@ -1,10 +1,28 @@
 import AddToCart from '@/components/products/AddToCart';
 import ProductItem from '@/components/products/ProductItem';
 import data from '@/lib/data';
+import productService from '@/lib/services/productService';
 import { HOME } from '@/routes/routes';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+
+
+export async function generateMetadata({
+  params,
+}:{
+  params:Promise<{ slug: string }>
+}){
+  const { slug } = await params;
+  const product = await productService.getBySlug(slug);
+  if(!product){
+    return {title:'Product not found'}
+  }
+  return {
+    title:product.name,
+    description:product.description,
+  }
+}
 
 export default async function ProductDetails({
   params,
@@ -12,13 +30,15 @@ export default async function ProductDetails({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const product = data.products.find((x) => x.slug === slug);
-  const suggestionProducts = data.products.filter((x) => x.slug !== slug);
+  const product = await productService.getBySlug(slug);
+
+  // const product = data.products.find((x) => x.slug === slug);
+  // const suggestionProducts = data.products.filter((x) => x.slug !== slug);
 
   if (!product) {
     return <div>Product not Found</div>;
   }
-
+ const suggestedProduct = await productService.getSuggestedProducts(slug);
   return (
     <>
       <div className="my-2">
@@ -81,7 +101,7 @@ export default async function ProductDetails({
           Similar Products
         </h2>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
-          {suggestionProducts.slice(0, 4).map((product) => (
+          {suggestedProduct.map((product) => (
             <ProductItem key={product.slug} product={product} />
           ))}
         </div>

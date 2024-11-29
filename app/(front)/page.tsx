@@ -1,6 +1,7 @@
 import ProductItem from '@/components/products/ProductItem'
 import data from '@/lib/data'
 import productService from '@/lib/services/productService'
+import { covertDoctoObj } from '@/lib/utils'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import React from 'react'
@@ -51,7 +52,7 @@ const Home = async () => {
       <h2 className="text-2xl py-2">Latest Products</h2>
       <div className="grid grid-cols-1 gap-4 mg:grid-cols-3 lg:grid-cols-4">
         {latestProducts.map((product) => (
-          <ProductItem key={product.slug} product={product} />
+          <ProductItem key={product.slug} product={ covertDoctoObj(product)} />
         ))}
       </div>
     </>

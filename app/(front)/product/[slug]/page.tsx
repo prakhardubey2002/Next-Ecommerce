@@ -2,6 +2,7 @@ import AddToCart from '@/components/products/AddToCart';
 import ProductItem from '@/components/products/ProductItem';
 import data from '@/lib/data';
 import productService from '@/lib/services/productService';
+import { covertDoctoObj } from '@/lib/utils';
 import { HOME } from '@/routes/routes';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -88,7 +89,7 @@ export default async function ProductDetails({
               {product.countInStock > 0 && (
                 <div className="card-actions justify-center">
                   <AddToCart
-                    item={{ ...product, qty: 0, color: '', size: '' }}
+                    item={{ ...covertDoctoObj(product), qty: 0, color: '', size: '' }}
                   />
                 </div>
               )}

@@ -10,8 +10,8 @@ type Inputs = {
 const Form = () => {
   const { data: session } = useSession()
   const params = useSearchParams()
-  let callbackUrl = params.get('callbackUrl') || '/'
-  let router = useRouter()
+  const callbackUrl = params.get('callbackUrl') || '/'
+  const router = useRouter()
 
   const {
     register,
@@ -68,6 +68,9 @@ const Form = () => {
               })}
               className="input input-bordered w-full max-w-sm"
             />
+            {errors.email?.message && (
+              <div className="text-error">{errors.email.message}</div>
+            )}
             <label className="label" htmlFor="email">
               Password
             </label>

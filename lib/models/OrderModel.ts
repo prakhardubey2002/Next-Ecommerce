@@ -22,7 +22,7 @@ const UserSchema = new mongoose.Schema(
   }
 )
 
-const UserModel = mongoose.models.User || mongoose.model('User', UserSchema)
+const UserModel = mongoose.models?.User || mongoose.model('User', UserSchema)
 export default UserModel
 export type OrderItem = {
   name: string
